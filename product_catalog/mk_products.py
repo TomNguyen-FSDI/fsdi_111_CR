@@ -38,7 +38,8 @@ def create_my_product(name, price, quantity):
 #models.session.query(models.User).order_by(models.Users.column).all()
 
 if __name__ == "__main__":
-    create_my_product("Apples", 10.00, 10)
+    create_my_product("Apples", 10.00, 100)
     products = Product.query.all()
     print(products)
-    create_my_product("Oranges", 12.00, 20)
+    create_my_product("Oranges", 12.00, 200)
+    create_my_product("Peaches", 12.00, 600)
