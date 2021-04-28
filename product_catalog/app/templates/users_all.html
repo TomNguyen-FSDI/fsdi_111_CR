@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Users All | {{ super() }}{% endblock title %}
+
+{% block content %}
+    <h1 class='text-center'>What is in our database:</h1>
+    <div class="container">
+        <table class='table'>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope='col'>Name</th>
+                <th scope='col'>Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Description</th>
+                <th scope="col">Delete</th>
+            </tr>
+            {% for product in products: %}
+            <tr>
+                <th scope='row'>{{ product.id }}</th>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                {% if product.quantity <= 100 %}
+                    <td style="background-color: red;">{{ product.quantity }}</td>
+                {% elif product.quantity <= 500 %}
+                    <td style="background-color: yellow;">{{ product.quantity }}</td>
+                {% elif product.quantity > 500 %}
+                    <td style="background-color: green;">{{ product.quantity }}</td>
+                {% endif %}
+                <td>{{ product.description }}</td>
+                <td>{{ product.delete }}
+                    {% if product.delete == True : %}
+                    <a href="{{ url_for('delete_undo', pid=product.id) }}">undo</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <!-- {% set counter = namespace(value=0) %}
+    {% for item in user: %}
+        {% set counter.value = counter.value + 1 %}
+        {% print("[{}, {}, {}, {}] ".format(item.id, item.first_name, item.last_name, item.hobbies)) %}
+        <br></br>
+
+    {% endfor %}     -->
+{% endblock content %}

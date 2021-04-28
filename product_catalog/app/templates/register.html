@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %} 
+Register Product
+{% endblock title %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+            <form method="POST" action="/products/create" class="form" role="form">
+                    {{ form.csrf_token }}
+                    <div class="form-group col-md-12">{{ wtf.form_field(
+                                                            form.name, class='form-control',
+                                                            placeholder='Laptops')
+                                                    }}</div>
+                    <div class="row">
+                        <div class="form-group col-md-6">{{ wtf.form_field(
+                                                                form.price, class='form-control',
+                                                                placeholder='1000.00')
+                                                        }}</div>
+                        <div class="form-group col-md-6">{{ wtf.form_field(
+                                                                form.quantity, class='form-control',
+                                                                placeholder='10')
+                                                        }}</div>
+                    </div>
+                    <div class="form-group col-md-12">{{ wtf.form_field(
+                                                            form.description, class='form-control',
+                                                            placeholder='Lenovo Laptop...')
+                                                    }}</div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary" style="margin-top:10px; width:100%;">Create</button>
+                    </div>
+            </form>
+    </div>
+</div
+{% endblock content %}

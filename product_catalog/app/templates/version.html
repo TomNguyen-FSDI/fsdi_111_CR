@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+version | {{ super() }}
+{% endblock title %}
+{% block content %}
+<div style="padding-left: 100px;">
+       <p><strong>ok</strong> : {{ version['ok'] }}</p>
+       <p><strong>message</strong> : {{ version['message'] }} </p>
+       <p><strong>version</strong> : {{ version['version'] }} </p>
+       <p><strong>server time</strong> : {{ version["server time"] }}</p>
+</div>
+{% endblock content %}
