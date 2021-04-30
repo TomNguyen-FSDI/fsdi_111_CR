@@ -2,6 +2,11 @@
 
 {% block title %}{{ product.name }}{% endblock title %}
 
+{% block css %}
+<link rel="stylesheet" href={{ url_for("static", filename="styles.css") }}>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+{% endblock css %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-8 offset-md-2">
@@ -12,6 +17,66 @@
     <a href="/products">List Products</a>
     <a href="{{ url_for('update_product_form', pid=product.id) }}">Update</a>
     <a href="{{ url_for('delete_product', pid=product.id) }}">Delete</a>
+    <br></br><br></br>
+    <div><h2>Reviews for {{ product.name }}</h2></div>
+    {% for review in reviews %}
+        <div>
+            <div style="display: flex;"> 
+                <span class="fas fa-user-circle fa-3x"></span>
+                <p style="margin-left: 10px; font-size: 32px;">{{ review.user_name }}</p>
+            </div>
+            {% for count in range(review.stars) %}
+                <span class="fa fa-star checked" style="color: orange;"></span>
+            {% endfor %}
+            {% for count in range(5-review.stars) %}
+                <span class="far fa-star" style="color: orange;"></span>
+            {% endfor %}
+            <p style="margin: 4px 0 0 0;">{{ review.review }}</p>
+            <br></br>
+            <div>
+    {% endfor %}
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="toast show align-items-center text-white bg-danger border-0"
+                role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        {{ message }}
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <form action="{{ url_for('create_review', pid=product.id, product_name=product.name) }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">User name:</label>
+                        <input type="text" class="form-control" name="user_name_form" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Review comment:</label>
+                        <input type="text" class="form-control" name="review_form" style="height: 100px;" />
+                    </div>
+                    <div class="mb-3">
+                        <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                    </div>
+                    <br></br>
+                    <input type="submit" value="Submit" class="btn btn-secondary" />
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
