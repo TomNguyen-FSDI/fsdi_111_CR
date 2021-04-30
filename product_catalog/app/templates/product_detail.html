@@ -46,7 +46,10 @@
         {% set star_1.value = star_1.value + 1 %}
         {% endif %}
     {% endfor %}
-    {% set average.value = total.value / reviews.__len__() %}
+
+    {% if reviews.__len__() != 0 %}
+      {% set average.value = total.value / reviews.__len__() %}
+    {% endif %}
 
     {% for count in range(average.value|int) %}
     <span class="fa fa-star checked" style="color: orange;"></span>
@@ -55,21 +58,23 @@
     <span class="far fa-star" style="color: orange;"></span>
     {% endfor %}
 
-    {% set bar_5 = namespace(value=0) %}
-    {% set bar_5 = star_5.value/reviews.__len__() * 100 %}
-    {% set bar_5 = bar_5|int %}
-    {% set bar_4 = namespace(value=0) %}
-    {% set bar_4 = star_4.value/reviews.__len__() * 100 %}
-    {% set bar_4 = bar_4|int %}
-    {% set bar_3 = namespace(value=0) %}
-    {% set bar_3 = star_3.value/reviews.__len__() * 100 %}
-    {% set bar_3 = bar_3|int %}
-    {% set bar_2 = namespace(value=0) %}
-    {% set bar_2 = star_2.value/reviews.__len__() * 100 %}
-    {% set bar_2 = bar_2|int %}
-    {% set bar_1 = namespace(value=0) %}
-    {% set bar_1 = star_1.value/reviews.__len__() * 100 %}
-    {% set bar_1 = bar_1|int %}
+    {% if reviews.__len__() != 0 %}
+      {% set bar_5 = namespace(value=0) %}
+      {% set bar_5 = star_5.value/reviews.__len__() * 100 %}
+      {% set bar_5 = bar_5|int %}
+      {% set bar_4 = namespace(value=0) %}
+      {% set bar_4 = star_4.value/reviews.__len__() * 100 %}
+      {% set bar_4 = bar_4|int %}
+      {% set bar_3 = namespace(value=0) %}
+      {% set bar_3 = star_3.value/reviews.__len__() * 100 %}
+      {% set bar_3 = bar_3|int %}
+      {% set bar_2 = namespace(value=0) %}
+      {% set bar_2 = star_2.value/reviews.__len__() * 100 %}
+      {% set bar_2 = bar_2|int %}
+      {% set bar_1 = namespace(value=0) %}
+      {% set bar_1 = star_1.value/reviews.__len__() * 100 %}
+      {% set bar_1 = bar_1|int %}
+    {% endif %}
 
     <div class="row" style="width: 450px;">
         <div class="side">
