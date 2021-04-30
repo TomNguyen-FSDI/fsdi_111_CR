@@ -4,6 +4,7 @@
 
 {% block css %}
 <link rel="stylesheet" href={{ url_for("static", filename="styles.css") }}>
+<link rel="stylesheet" href={{ url_for("static", filename="reviews.css") }}>
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
 {% endblock css %}
 
@@ -19,6 +20,118 @@
     <a href="{{ url_for('delete_product', pid=product.id) }}">Delete</a>
     <br></br><br></br>
     <div><h2>Reviews for {{ product.name }}</h2></div>
+    {% set average = namespace(value=0) %}
+    {% set total = namespace(value=0) %}
+    {% set star_1 = namespace(value=0) %}
+    {% set star_2 = namespace(value=0) %}
+    {% set star_3 = namespace(value=0) %}
+    {% set star_4 = namespace(value=0) %}
+    {% set star_5 = namespace(value=0) %}
+
+    {% for review in reviews%}
+        {% set total.value = total.value + review.stars %}
+        {% if review.stars == 5 %}
+        {% set star_5.value = star_5.value + 1 %}
+        {% endif %}
+        {% if review.stars == 4 %}
+        {% set star_4.value = star_4.value + 1 %}
+        {% endif %}
+        {% if review.stars == 3 %}
+        {% set star_3.value = star_3.value + 1 %}
+        {% endif %}
+        {% if review.stars == 2 %}
+        {% set star_2.value = star_2.value + 1 %}
+        {% endif %}
+        {% if review.stars == 1 %}
+        {% set star_1.value = star_1.value + 1 %}
+        {% endif %}
+    {% endfor %}
+    {% set average.value = total.value / reviews.__len__() %}
+
+    {% for count in range(average.value|int) %}
+    <span class="fa fa-star checked" style="color: orange;"></span>
+    {% endfor %}
+    {% for count in range((5-average.value|int)|int) %}
+    <span class="far fa-star" style="color: orange;"></span>
+    {% endfor %}
+
+    {% set bar_5 = namespace(value=0) %}
+    {% set bar_5 = star_5.value/reviews.__len__() * 100 %}
+    {% set bar_5 = bar_5|int %}
+    {% set bar_4 = namespace(value=0) %}
+    {% set bar_4 = star_4.value/reviews.__len__() * 100 %}
+    {% set bar_4 = bar_4|int %}
+    {% set bar_3 = namespace(value=0) %}
+    {% set bar_3 = star_3.value/reviews.__len__() * 100 %}
+    {% set bar_3 = bar_3|int %}
+    {% set bar_2 = namespace(value=0) %}
+    {% set bar_2 = star_2.value/reviews.__len__() * 100 %}
+    {% set bar_2 = bar_2|int %}
+    {% set bar_1 = namespace(value=0) %}
+    {% set bar_1 = star_1.value/reviews.__len__() * 100 %}
+    {% set bar_1 = bar_1|int %}
+
+    <div class="row" style="width: 450px;">
+        <div class="side">
+          <div>5 star</div>
+        </div>
+        <div class="middle">
+          <div class="bar-container">
+            <div class="bar-5" style="width: {{ bar_5 }}%;"></div>
+          </div>
+        </div>
+        <div class="side right">
+          <div>{{ star_5.value }}</div>
+        </div>
+        <div class="side">
+          <div>4 star</div>
+        </div>
+        <div class="middle">
+          <div class="bar-container">
+            <div class="bar-4" style="width: {{ bar_4 }}%;"></div>
+          </div>
+        </div>
+        <div class="side right">
+          <div>{{ star_4.value}}</div>
+        </div>
+        <div class="side">
+          <div>3 star</div>
+        </div>
+        <div class="middle">
+          <div class="bar-container">
+            <div class="bar-3" style="width: {{ bar_3 }}%;"></div>
+          </div>
+        </div>
+        <div class="side right">
+          <div>{{ star_3.value }}</div>
+        </div>
+        <div class="side">
+          <div>2 star</div>
+        </div>
+        <div class="middle">
+          <div class="bar-container">
+            <div class="bar-2" style="width: {{ bar_2 }}%;"></div>
+          </div>
+        </div>
+        <div class="side right">
+          <div>{{ star_2.value}}</div>
+        </div>
+        <div class="side">
+          <div>1 star</div>
+        </div>
+        <div class="middle">
+          <div class="bar-container">
+            <div class="bar-1" style="width: {{ bar_1 }}%;"></div>
+          </div>
+        </div>
+        <div class="side right">
+          <div>{{ star_1.value}}</div>
+        </div>
+      </div>
+      <br>
+<!-- .__len__() will return the number of reviews. same as len(reviews) -->
+    <p>{{ "{:.2f}".format(average.value) }} average based on {{ reviews.__len__() }} reviews.</p>
+    <br></br>
     {% for review in reviews %}
         <div>
             <div style="display: flex;"> 

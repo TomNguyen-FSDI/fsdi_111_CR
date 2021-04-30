@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Product catalog{% endblock title %}
+
+{% block content %}
+    {%set i = 0 %}
+    <div class="col-md-12" style="padding: 1%;">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="toast show align-items-center text-white bg-secondary border-0"
+            role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ message }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      <div class="row">
+      {% for product in product_list %}
+      <div class="card" style="width: 18rem; margin: 0.5%;">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Price: {{ "${:,.2f}".format(product.price) }}</h6>
+            <p class="card-text">Quantity: {{ product.quantity }}</p>
+            <p class="card-text" style="margin: -14px 0 5px 0;">Description: {{ product.description }}</p>
+            <a href="{{ url_for('get_product_detail', pid=product.id) }}" class="card-link">Review this</a>
+            <a href="{{ url_for('update_product_form', pid=product.id) }}" class="card-link">Update</a>
+            <a href="{{ url_for('delete_product', pid=product.id) }}" class="card-link">Delete</a>
+          </div>
+        </div>
+        {% set  i = i+1 %}
+        {% if i%4 == 0 %}
+        </div>
+        <div class="row">
+        {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+{% endblock content %}

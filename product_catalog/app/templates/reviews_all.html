@@ -12,22 +12,22 @@
     <div class="col-md-8 offset-md-2">
         <br></br>
         {% for review in reviews %}
-        <div>
-            <div><h2>Reviews for {{ review.product_name }}</h2></div>
-            <div style="display: flex;"> 
-                <span class="fas fa-user-circle fa-3x"></span>
-                <p style="margin-left: 10px; font-size: 32px;">{{ review.user_name }}</p>
-            </div>
-            {% for count in range(review.stars) %}
+            <div>
+                <div><h2>Reviews for {{ review.product_name }}</h2></div>
+                <div style="display: flex;"> 
+                    <span class="fas fa-user-circle fa-3x"></span>
+                    <p style="margin-left: 10px; font-size: 32px;">{{ review.user_name }}</p>
+                </div>
+                {% for count in range(review.stars) %}
                 <span class="fa fa-star checked" style="color: orange;"></span>
-            {% endfor %}
-            {% for count in range(5-review.stars) %}
+                {% endfor %}
+                {% for count in range(5-review.stars) %}
                 <span class="far fa-star" style="color: orange;"></span>
+                {% endfor %}
+                <p style="margin: 4px 0 0 0;">{{ review.review }}</p>
+            </div>
+            <br></br>
             {% endfor %}
-            <p style="margin: 4px 0 0 0;">{{ review.review }}</p>
-        </div>
-        <br></br>
-    {% endfor %}
     </div>
 </div>
 {% endblock content %}

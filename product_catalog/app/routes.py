@@ -66,6 +66,12 @@ def register():
 
 @app.route('/products/reviews')
 def reviews():
+    products = Product.query.filter_by(delete=False).all()
+    return render_template("review.html", product_list = products)
+
+
+@app.route('/products/reviews/all')
+def reviews_all():
     review = Review.query.all()  
     return render_template("reviews_all.html", reviews=review)
 
@@ -86,8 +92,6 @@ def create_review(pid, product_name):
             flash('name can\'t be blank')
             return redirect(url_for('get_product_detail',pid=pid))
         create_my_review(product_name, name, review_comment, stars)
-
-
     return redirect(url_for('get_product_detail',pid=pid))
 
 
